@@ -1,13 +1,12 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "name": "Insta Clone",
     "slug": "rs-insta-clone",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
