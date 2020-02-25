@@ -10,10 +10,11 @@ export default function Feed() {
     useEffect(() => {
         async function loadFeed() {
             const response = await fetch(
-                'http://192.168.1.77:3000/feed?_expand=author&_limit=5&_page=1'
+                'https://my-json-server.typicode.com/lazarojunior/rs-insta-clone/feed?_expand=author&_limit=5&_page=1'
             )
 
             const data = await response.json()
+            console.warn(data);
 
             setFeed(data)
         }
@@ -35,7 +36,7 @@ export default function Feed() {
                             <Name>{ item.author.name }</Name>
                         </Header>
 
-                        <PostImage source={{ uri: item.image }} />
+                        <PostImage ratio={item.aspectRatio} source={{ uri: item.image }} />
                         <Description>
                             <Name>{ item.author.name }</Name> {item.description}
                         </Description>
