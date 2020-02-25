@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lazao.insta-clone"
+    },
+    "android": {
+      "package": "com.lazao.insta-clone"
     }
   }
 }
