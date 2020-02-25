@@ -32,18 +32,31 @@ export default function Feed() {
         setLoading(false)
     }
 
-    useEffect(() => {
-        loadPage()
-    }, [])
-
     async function refreshList() {
         console.log('refreshList');
         setRefreshing(true);
 
         await loadPage(1, true);
 
-        setRefreshing(false);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
     }
+
+    useEffect(() => {
+        loadPage()
+    }, [])
+
+
+    // Loading inicial do APP
+    if (loading && page === 1) {
+        return <View style={{
+          width: '100%',
+          height: '100%'
+        }}><Loading />
+        </View>;
+    }
+
 
     return (
         <View>
@@ -52,8 +65,14 @@ export default function Feed() {
                 keyExtractor={post => String(post.id)}
                 onEndReached={() => loadPage()}
                 onEndReachedThreshold={0.1}
-                onRefresh={() => refreshList()}
+                onRefresh={refreshList}
                 refreshing={refreshing}
+                // refreshControl={
+                //    <RefreshControl
+                //     refreshing={refreshing}
+                //     onRefresh={refreshList}
+                //    />
+                //  }
                 ListFooterComponent={loading && <Loading />}
                 renderItem={({ item }) => (
                     <Post>
