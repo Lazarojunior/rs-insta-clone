@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { View, Image } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { Post, Header, Avatar, Name, PostImage, Description } from './styles';
+import { Post, Header, Avatar, Name, PostImage, Description, Loading } from './styles';
 
 export default function Feed() {
     const [feed, setFeed] = useState([])
     const [page, setPage] = useState(1)
     const [total, setTotal] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [refreshing, setRefreshing] = useState(false)
 
-    async function loadPage(pageNumber = page) {
+    async function loadPage(pageNumber = page, shouldRefresh = false) {
+        console.log('loadPage', pageNumber);
         if(total && pageNumber > total) return;
 
         setLoading(true)
@@ -23,10 +25,9 @@ export default function Feed() {
         const totalItems = response.headers.get('X-Total-Count')
 
         // console.warn(data);
-        console.log(pageNumber);
 
         setTotal(Math.floor(totalItems / 5))
-        setFeed([...feed, ...data])
+        setFeed(shouldRefresh ? data : [...feed, ...data])
         setPage(pageNumber + 1)
         setLoading(false)
     }
@@ -35,7 +36,14 @@ export default function Feed() {
         loadPage()
     }, [])
 
-    // loadFeed()
+    async function refreshList() {
+        console.log('refreshList');
+        setRefreshing(true);
+
+        await loadPage(1, true);
+
+        setRefreshing(false);
+    }
 
     return (
         <View>
@@ -44,7 +52,9 @@ export default function Feed() {
                 keyExtractor={post => String(post.id)}
                 onEndReached={() => loadPage()}
                 onEndReachedThreshold={0.1}
-                ListFooterComponent={loading && <Loading /> }
+                onRefresh={() => refreshList()}
+                refreshing={refreshing}
+                ListFooterComponent={loading && <Loading />}
                 renderItem={({ item }) => (
                     <Post>
                         <Header>
