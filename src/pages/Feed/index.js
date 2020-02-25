@@ -50,6 +50,12 @@ export default function Feed() {
         loadPage()
     }, [])
 
+    const handleViewableChanged = useCallback(
+        ({ changed }) => {
+            setViewable(changed.map(({ item }) => item.id))
+        },
+        []
+    )
 
     // Loading inicial do APP
     if (loading && page === 1) {
@@ -59,7 +65,6 @@ export default function Feed() {
         }}><Loading />
         </View>;
     }
-
 
     return (
         <View>
@@ -76,6 +81,8 @@ export default function Feed() {
                 //     onRefresh={refreshList}
                 //    />
                 //  }
+                onViewableItemsChanged={handleViewableChanged}
+                viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
                 ListFooterComponent={loading && <Loading />}
                 renderItem={({ item }) => (
                     <Post>
@@ -85,6 +92,7 @@ export default function Feed() {
                         </Header>
 
                         <LazyImage 
+                            shouldLoad={viewable.includes(item.id)}
                             aspectRatio={item.aspectRatio} 
                             smallSource={{ uri: item.small }} 
                             source={{ uri: item.image }} 
