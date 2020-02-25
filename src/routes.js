@@ -12,9 +12,9 @@ const Routes = createAppContainer(
     createStackNavigator({
         Feed
     }, {
-        headerLayoutPreset: 'center',
         defaultNavigationOptions: {
             headerTitle: <Image source={logo} />,
+            headerTitleAlign: 'center',
             headerStyle: {
                 backgroundColor: '#f5f5f5'
             }
