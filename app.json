@@ -24,10 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.lazao.insta-clone"
+      "bundleIdentifier": "com.lazao.instaClone"
     },
     "android": {
-      "package": "com.lazao.insta-clone"
+      "package": "com.lazao.instaClone"
     }
   }
 }
