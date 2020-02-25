@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Image } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+
+import LazyImage from '../../components/LazyImage';
 
 import { Post, Header, Avatar, Name, PostImage, Description, Loading } from './styles';
 
@@ -10,6 +12,7 @@ export default function Feed() {
     const [total, setTotal] = useState(0)
     const [loading, setLoading] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
+    const [viewable, setViewable] = useState([])
 
     async function loadPage(pageNumber = page, shouldRefresh = false) {
         console.log('loadPage', pageNumber);
@@ -81,7 +84,12 @@ export default function Feed() {
                             <Name>{ item.author.name }</Name>
                         </Header>
 
-                        <PostImage ratio={item.aspectRatio} source={{ uri: item.image }} />
+                        <LazyImage 
+                            aspectRatio={item.aspectRatio} 
+                            smallSource={{ uri: item.small }} 
+                            source={{ uri: item.image }} 
+                        />
+
                         <Description>
                             <Name>{ item.author.name }</Name> {item.description}
                         </Description>
