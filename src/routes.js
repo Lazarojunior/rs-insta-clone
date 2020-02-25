@@ -13,11 +13,12 @@ const Routes = createAppContainer(
         Feed
     }, {
         defaultNavigationOptions: {
-            headerTitle: <Image source={logo} />,
             headerTitleAlign: 'center',
-            headerStyle: {
-                backgroundColor: '#f5f5f5'
-            }
+            headerTitle: () => <Image source={logo} />,
+            // headerTitleAlign: 'center',
+            // headerStyle: {
+            //     backgroundColor: '#f5f5f5'
+            // }
         }
     })
 )
